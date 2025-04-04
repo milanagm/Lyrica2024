@@ -113,3 +113,32 @@ Located in `frontend/src/components/grandchild-components/`:
 
 
 
+###################### Understanding the Flow #############################
+
+1. **Frontend Initial Input**:
+   - The user enters text in the `EmotionMusicPlayer` component
+   - This component has a `classifyEmotion` function that gets triggered when the user submits the text
+
+2. **Frontend API Call**:
+   - The `classifyEmotion` function in `EmotionMusicPlayer` calls the `classifyEmotionAPI` function from `api.js`
+   - This function makes a POST request to `http://127.0.0.1:8000/analyze_file` with the text and instrumental flag
+
+3. **Backend Processing**:
+   - The request hits the FastAPI backend at the `/analyze_file` endpoint   ->   `/backend/app/main.py`
+   - The backend flow is:
+     1. The `analyze_file` endpoint receives the request
+     2. It calls `classify_emotion(input.text)` to analyze the emotion
+     3. Then it calls `fetch_music(emotion, input.instrumental)` to get a music recommendation
+     4. Finally, it returns both the emotion and track data back to the frontend
+
+4. **Back to Frontend**:
+   - The frontend receives the response and updates its state with:
+     - The classified emotion
+     - The recommended track
+   - The UI then updates to display this information
+
+The key components involved are:
+- Frontend: `EmotionMusicPlayer.js` → `api.js`
+- Backend: `main.py` → `emotion_classifier.py` → `music_recommendation.py`
+
+
