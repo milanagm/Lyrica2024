@@ -7,7 +7,7 @@ export const classifyEmotionAPI = async (text, instrumental) => {
   const response = await fetch("http://127.0.0.1:8000/analyze_file", {
     method: "POST", // HTTP method for creating or sending data.
     headers: { "Content-Type": "application/json" }, // Specify JSON payload for API.
-    body: JSON.stringify({ text, instrumental }), // Miguel's addition: Send input text and instrumental toggle state.
+    body: JSON.stringify({ text, instrumental }), // Send input text and instrumental toggle state.
   });
 
   // Handle API errors by checking the response status.
@@ -15,7 +15,7 @@ export const classifyEmotionAPI = async (text, instrumental) => {
     // Extract error details from the API response if available.
     const errorData = await response.json();
     throw new Error(
-      errorData.detail || "Failed to analyze file." // Miguel's addition: Provide a clear error message.
+      errorData.detail || "Failed to analyze file." // Provide a clear error message.
     );
   }
 

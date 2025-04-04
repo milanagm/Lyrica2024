@@ -1,29 +1,31 @@
 // EmotionMusicPlayer.js
 
-// This is a child component within the "child-components" folder. It manages the state, API logic, and renders grandchild components from the "grandchild-components" folder. 
+// This is a child component within the "child-components" folder. 
+// It manages the state, API logic, and renders grandchild components from the "grandchild-components" folder. 
+
 // It is used by the App.js file, which resides in the "parent-component" folder.
 
 import React, { useState, useEffect } from "react"; // Import useEffect for managing localStorage sync
-import FileInput from "../grandchild-components/FileInput"; // Miguel's addition
-import TextInput from "../grandchild-components/TextInput"; // Miguel's addition
-import ToggleSwitch from "../grandchild-components/ToggleSwitch"; // Miguel's addition
-import EmotionDisplay from "../grandchild-components/EmotionDisplay"; // Miguel's addition
-import TrackPlayer from "../grandchild-components/TrackPlayer"; // Miguel's addition
-import ErrorMessage from "../grandchild-components/ErrorMessage"; // Miguel's addition
-import HistoryList from "../grandchild-components/HistoryList"; // Import new HistoryList component
-import { classifyEmotionAPI } from "../../utilities/api"; // Miguel's addition
+import FileInput from "../grandchild-components/FileInput"; 
+import TextInput from "../grandchild-components/TextInput"; 
+import ToggleSwitch from "../grandchild-components/ToggleSwitch"; 
+import EmotionDisplay from "../grandchild-components/EmotionDisplay"; 
+import TrackPlayer from "../grandchild-components/TrackPlayer"; 
+import ErrorMessage from "../grandchild-components/ErrorMessage"; 
+import HistoryList from "../grandchild-components/HistoryList"; 
+import { classifyEmotionAPI } from "../../utilities/api"; 
 
-import banner from "../../assets/Lirica_Banner.svg"; // Import the SVG file for the banner
+import banner from "../../assets/Lirica_Banner.svg";
 
 const EmotionMusicPlayer = () => {
   // Main state variables for managing the application logic.
-  const [inputMode, setInputMode] = useState("file"); // State for toggling between file and text input modes
-  const [text, setText] = useState(""); // State to store user input or uploaded file content
-  const [emotion, setEmotion] = useState(""); // State to store the classified emotion result
-  const [loading, setLoading] = useState(false); // State to indicate whether the app is processing data
-  const [track, setTrack] = useState(null); // State to store track details (e.g., song name and artist)
-  const [error, setError] = useState(""); // State to store error messages for display
-  const [instrumental, setInstrumental] = useState(false); // State to determine if instrumental tracks are preferred
+  const [inputMode, setInputMode] = useState("file"); // for toggling between file and text input modes
+  const [text, setText] = useState(""); // to store user input or uploaded file content
+  const [emotion, setEmotion] = useState(""); // to store the classified emotion result
+  const [loading, setLoading] = useState(false); // to indicate whether the app is processing data
+  const [track, setTrack] = useState(null); // to store track details (e.g., song name and artist)
+  const [error, setError] = useState(""); // to store error messages for display
+  const [instrumental, setInstrumental] = useState(false); // to determine if instrumental tracks are preferred
   const [history, setHistory] = useState(
     JSON.parse(localStorage.getItem("history")) || [] // Initialize the analysis history from localStorage
   );
@@ -41,7 +43,7 @@ const EmotionMusicPlayer = () => {
 
     // Validate input
     if (!text.trim()) {
-      setError("Please provide text or upload a file."); // Show an error if no input is provided
+      setError("Please provide text or upload a file."); // if no input is provided
       setLoading(false);
       return;
     }
@@ -61,7 +63,7 @@ const EmotionMusicPlayer = () => {
       };
       setHistory([newEntry, ...history]); // Add the new entry to the beginning of the history array
     } catch (error) {
-      setError("Error in classification. Please try again."); // Display an error message if the API call fails
+      setError("Error in classification. Please try again."); // if the API call fails
     } finally {
       setLoading(false); // End loading state
     }

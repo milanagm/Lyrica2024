@@ -7,17 +7,20 @@ The application consists of a React frontend and a FastAPI backend.
 ## Directory Structure
 ```
 LyricaMAIN/
-├── frontend/                 # React 
+├── frontend/                 # React   
+│   ├── public/ index.html    # entry point / root for rendering frontend components          
 │   ├── src/
 │   │   ├── assets/         
-│   │   ├── components/     # React components
+│   │   ├── components/       # React components
 │   │   │   ├── parent-component/
 │   │   │   ├── child-components/
 │   │   │   └── grandchild-components/
-│   │   ├── utilities/api.js     # Utility functions
+│   │   ├── utilities/api.js     # APIS here!
 │   │   ├── index.js             # Application entry point
 │   │   └── index.css            # Global styles
 │   └── package.json             # Frontend dependencies
+│
+│
 └── backend/                 # FastAPI 
     ├── app/
     │   ├── __init__.py
@@ -29,10 +32,63 @@ LyricaMAIN/
     └── requirements.txt    # Backend dependencies
 ```
 
+
+## Frontend Architecture
+#### 1. App.js (Parent Component) -> `frontend/src/components/parent-component/`
+- **Purpose**: Root component that renders the main application interface
+- **Key Features**: Renders `EmotionMusicPlayer` 
+
+#### 2. EmotionMusicPlayer.js (Child Component) -> `frontend/src/components/child-components/`
+- **Purpose**: Main application logic and state management
+- **Key Features**:
+  - Manages application state (text, emotion, track, loading, error)
+  - Handles API calls through `classifyEmotionAPI`
+  - Renders all grandchild components
+
+
+#### 3. Grandchild Components
+Located in `frontend/src/components/grandchild-components/`:
+
+1. **FileInput.js**
+   - Handles file upload functionality
+   - Updates parent state with file content
+
+2. **TextInput.js**
+   - Manages text input field
+   - Updates parent state with user input
+
+3. **EmotionDisplay.js**
+   - Displays the detected emotion
+   - Receives emotion as prop from parent
+
+4. **TrackPlayer.js**
+   - Renders music player interface
+   - Displays track information and audio controls
+
+5. **ToggleSwitch.js**
+   - Manages instrumental music preference
+   - Updates parent state with toggle value
+
+6. **ErrorMessage.js**
+   - Displays error messages
+   - Receives error text as prop from parent
+
+7. **HistoryList.js**
+   - Shows analysis history
+   - Manages local storage persistence
+
+### Utilities
+
+#### frontend/utilities/api.js
+- **Purpose**: Centralizes API communication
+- **Key Methods**:
+  - `classifyEmotionAPI(text, instrumental)`: Makes POST request to backend
+- **Location**: `frontend/src/utilities/`
+
+
+
+
 ## Backend Architecture
-
-### Core Components
-
 #### 1. main.py
 - **Purpose**: Entry point for the FastAPI application
 - **Key Methods**:
@@ -69,62 +125,8 @@ LyricaMAIN/
   - `get_env_variable(key: str) -> str`: Retrieves environment variables
   - `get_openai_client() -> OpenAI`: Initializes OpenAI client
 
-## Frontend Architecture
 
-### Component Hierarchy
 
-#### 1. App.js (Parent Component)
-- **Purpose**: Root component that renders the main application interface
-- **Key Features**:
-  - Renders `EmotionMusicPlayer` component
-- **Location**: `frontend/src/components/parent-component/`
-
-#### 2. EmotionMusicPlayer.js (Child Component)
-- **Purpose**: Main application logic and state management
-- **Key Features**:
-  - Manages application state (text, emotion, track, loading, error)
-  - Handles API calls through `classifyEmotionAPI`
-  - Renders all grandchild components
-- **Location**: `frontend/src/components/child-components/`
-
-#### 3. Grandchild Components
-Located in `frontend/src/components/grandchild-components/`:
-
-1. **FileInput.js**
-   - Handles file upload functionality
-   - Updates parent state with file content
-
-2. **TextInput.js**
-   - Manages text input field
-   - Updates parent state with user input
-
-3. **EmotionDisplay.js**
-   - Displays the detected emotion
-   - Receives emotion as prop from parent
-
-4. **TrackPlayer.js**
-   - Renders music player interface
-   - Displays track information and audio controls
-
-5. **ToggleSwitch.js**
-   - Manages instrumental music preference
-   - Updates parent state with toggle value
-
-6. **ErrorMessage.js**
-   - Displays error messages
-   - Receives error text as prop from parent
-
-7. **HistoryList.js**
-   - Shows analysis history
-   - Manages local storage persistence
-
-### Utilities
-
-#### api.js
-- **Purpose**: Centralizes API communication
-- **Key Methods**:
-  - `classifyEmotionAPI(text, instrumental)`: Makes POST request to backend
-- **Location**: `frontend/src/utilities/`
 
 ## Component Interactions
 
@@ -146,9 +148,11 @@ Located in `frontend/src/components/grandchild-components/`:
    - History is updated and persisted in localStorage
 5. Error handling through `ErrorMessage` component
 
+
+
+
 ## API Integration
 
-### External APIs
 1. **OpenAI API**
    - Used for emotion classification
    - Configured through environment variables
@@ -157,34 +161,7 @@ Located in `frontend/src/components/grandchild-components/`:
    - Used for music track recommendations
    - Requires client ID from environment variables
 
-### Internal API
-- **Backend Endpoint**: `http://127.0.0.1:8000/analyze_file`
-- **Method**: POST
-- **Request Body**:
-  ```json
-  {
-    "text": "string",
-    "instrumental": boolean
-  }
-  ```
-- **Response**:
-  ```json
-  {
-    "emotion": "string",
-    "track": {
-      "track_name": "string",
-      "artist_name": "string",
-      "audio_url": "string"
-    }
-  }
-  ```
 
-## State Management
-- Frontend uses React's useState and useEffect hooks
-- Local storage for persisting analysis history
-- Backend maintains stateless architecture with FastAPI
 
-## Error Handling
-- Frontend: Component-level error states and display
-- Backend: FastAPI exception handling and HTTP status codes
-- API: Request/response validation and error propagation
+
+
