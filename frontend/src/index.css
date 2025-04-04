@@ -1,0 +1,105 @@
+/* index.css
+ *
+ * Purpose: This file contains all styles for the application, including:
+ * - Global styles (e.g., body, buttons, headers).
+ * - Component-specific styles (e.g., EmotionMusicPlayer, HistoryList).
+ *
+ * Use this file to define all CSS rules for the app. Avoid inline styles and keep all
+ * styles centralized here for maintainability.
+ */
+
+/* General body styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif; /* Unified font choice */
+  background-color: hsl(284, 100%, 96%); /* Soft purple-pink background for the entire page */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-width: 400px; /* Prevent the window from shrinking too much */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
+}
+
+/* Styling for the banner
+ *
+ * - Replaces the default header with a custom SVG banner.
+ * - The banner spans the full width of the page but maintains a fixed height.
+ * - Dynamically crops the image when the window is resized, while maintaining
+ *   its aspect ratio.
+ */
+.banner {
+  display: flex; /* Center the banner content */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  width: 100%; /* Full width of the page */
+  height: 150px; /* Fixed height for the banner */
+  overflow: hidden; /* Crop edges if the window is too small */
+  background: none; /* Ensure no background color is applied */
+  margin: 0; /* Remove any margin */
+}
+
+.banner-image {
+  width: 100%; /* Fill the width */
+  height: 100%; /* Maintain the banner's fixed height */
+  object-fit: cover; /* Crop dynamically while preserving aspect ratio */
+}
+
+/* Container for the app
+ *
+ * - Contains the EmotionMusicPlayer content.
+ * - Restricts the content width for better readability.
+ * - Provides padding, borders, and shadows for a neat appearance.
+ */
+.container {
+  max-width: 400px; /* Restrict content width */
+  margin: 20px auto; /* Add space above and center the container horizontally */
+  padding: 20px; /* Internal padding for content */
+  border: 1px solid #ddd; /* Light border for visual separation */
+  border-radius: 8px; /* Rounded corners */
+  background-color: #fff; /* White background for the container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Button styles
+ *
+ * - Applies consistent styling to buttons throughout the app.
+ * - Includes hover effects to improve user interaction feedback.
+ */
+button {
+  display: block; /* Force buttons to occupy their own line */
+  width: 100%; /* Full width of the container */
+  padding: 10px; /* Space inside the button */
+  background-color: #8E1A99; /* Deep purple color */
+  color: white; /* White text color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 16px; /* Standard font size */
+  margin-top: 20px; /* Space above the button */
+}
+
+button:hover {
+  background-color: #76157E; /* Slightly darker purple on hover */
+}
+
+/* Error message styles
+ *
+ * - Highlights errors in red to catch user attention.
+ * - Centers error messages for consistent layout.
+ */
+.error-message {
+  color: red; /* Highlight errors in red */
+  font-weight: bold; /* Make error messages stand out */
+  text-align: center; /* Center-align error text */
+  margin: 10px 0; /* Add vertical spacing around error messages */
+}
+
+/* Styles for history list items
+ *
+ * - Adds spacing between individual entries in the analysis history list.
+ */
+.history-list-item {
+  margin-bottom: 10px; /* Space between history entries */
+}
