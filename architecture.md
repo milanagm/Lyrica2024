@@ -45,40 +45,17 @@ LyricaMAIN/
   - Handles API calls through `classifyEmotionAPI`
   - Renders all grandchild components
 
-
 #### 3. Grandchild Components
 Located in `frontend/src/components/grandchild-components/`:
+1. **FileInput.js**: Handles file upload functionality & Updates parent state with file content
+2. **TextInput.js**: Manages text input field & Updates parent state with user input
+3. **EmotionDisplay.js**: Displays the detected emotion & Receives emotion as prop from parent
+4. **TrackPlayer.js**: Renders music player interface & Displays track information and audio controls
+5. **ToggleSwitch.js**: Manages instrumental music preference & Updates parent state with toggle value
+6. **ErrorMessage.js**: Displays error messages & Receives error text as prop from parent
+7. **HistoryList.js**: Shows analysis history & Manages local storage persistence                        ##CHECK THIS OUT FOR SQL DATABASE 
 
-1. **FileInput.js**
-   - Handles file upload functionality
-   - Updates parent state with file content
-
-2. **TextInput.js**
-   - Manages text input field
-   - Updates parent state with user input
-
-3. **EmotionDisplay.js**
-   - Displays the detected emotion
-   - Receives emotion as prop from parent
-
-4. **TrackPlayer.js**
-   - Renders music player interface
-   - Displays track information and audio controls
-
-5. **ToggleSwitch.js**
-   - Manages instrumental music preference
-   - Updates parent state with toggle value
-
-6. **ErrorMessage.js**
-   - Displays error messages
-   - Receives error text as prop from parent
-
-7. **HistoryList.js**
-   - Shows analysis history
-   - Manages local storage persistence
-
-### Utilities
-
+#### 4. Utilities and API
 #### frontend/utilities/api.js
 - **Purpose**: Centralizes API communication
 - **Key Methods**:
@@ -88,7 +65,7 @@ Located in `frontend/src/components/grandchild-components/`:
 
 
 
-## Backend Architecture
+## Backend Architecture -> mainly /app folder
 #### 1. main.py
 - **Purpose**: Entry point for the FastAPI application
 - **Key Methods**:
@@ -100,17 +77,13 @@ Located in `frontend/src/components/grandchild-components/`:
 
 #### 2. emotion_classifier.py
 - **Purpose**: Handles emotion classification using OpenAI's GPT API
-- **Key Methods**:
-  - `classify_emotion(text: str) -> str`: Analyzes text and returns detected emotion
-- **Dependencies**:
-  - `utils.py` for OpenAI client initialization
+- **Key Methods**: `classify_emotion(text: str) -> str`: Analyzes text and returns detected emotion
+- **Dependencies**:`utils.py` for OpenAI client initialization
 
 #### 3. music_recommendation.py
 - **Purpose**: Recommends music tracks based on emotions using Jamendo API
-- **Key Methods**:
-  - `fetch_music(emotion: str, instrumental: bool) -> dict`: Fetches music track based on emotion and instrumental preference
-- **Dependencies**:
-  - `utils.py` for environment variable management
+- **Key Methods**: `fetch_music(emotion: str, instrumental: bool) -> dict`: Fetches music track based on emotion and instrumental preference
+- **Dependencies**: `utils.py` for environment variable management
 
 #### 4. models.py
 - **Purpose**: Defines data models for API requests/responses
@@ -127,32 +100,7 @@ Located in `frontend/src/components/grandchild-components/`:
 
 
 
-
-## Component Interactions
-
-### Backend Flow
-1. Client sends POST request to `/analyze_file` endpoint
-2. `main.py` receives request and validates input using `FileAnalysisInput` model
-3. `emotion_classifier.py` analyzes text using OpenAI API
-4. `music_recommendation.py` fetches matching track from Jamendo API
-5. Response containing emotion and track details is sent back to client
-
-### Frontend Flow
-1. User interacts with `FileInput` or `TextInput` components
-2. `EmotionMusicPlayer` manages state and API calls
-3. User toggles instrumental preference using `ToggleSwitch`
-4. On analysis:
-   - `classifyEmotionAPI` is called with text and instrumental preference
-   - Response updates emotion and track states
-   - Results are displayed using `EmotionDisplay` and `TrackPlayer`
-   - History is updated and persisted in localStorage
-5. Error handling through `ErrorMessage` component
-
-
-
-
 ## API Integration
-
 1. **OpenAI API**
    - Used for emotion classification
    - Configured through environment variables
