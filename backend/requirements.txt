@@ -3,3 +3,4 @@ openai
 fastapi
 uvicorn[standard]
 requests
+motor

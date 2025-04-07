@@ -23,7 +23,7 @@ def classify_emotion(text: str) -> str:
     print(f"DEBUG: Sending text to OpenAI API: {text}")
     
     response = openai_client.chat.completions.create(
-        model="gpt-4",
+        model="gpt-4o",
         messages=[
             {"role": "system", "content": "Analyze emotions from text."},
             {"role": "user", "content": f"Classify the emotion of this text: {text}"},
