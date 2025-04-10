@@ -1,0 +1,13 @@
+{
+  "name": "lyrica-main",
+  "version": "1.0.0",
+  "description": "Lyrica application with frontend and backend",
+  "scripts": {
+    "start": "concurrently \"cd frontend && npm start\" \"cd backend && ./start_backend.sh\"",
+    "dev": "concurrently \"cd frontend && npm start\" \"cd backend && ./start_backend.sh\"",
+    "install-all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+} 
