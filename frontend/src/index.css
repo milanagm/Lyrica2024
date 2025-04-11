@@ -103,3 +103,87 @@ button:hover {
 .history-list-item {
   margin-bottom: 10px; /* Space between history entries */
 }
+
+/* Text Reader component styles
+ *
+ * - Styles for the text-to-speech functionality.
+ * - Includes styling for the read button and volume controls.
+ */
+.text-reader {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.text-reader button {
+  background-color: #4a90e2; /* Blue color for the read button */
+  margin-top: 10px;
+}
+
+.text-reader button.reading {
+  background-color: #e74c3c; /* Red color when reading */
+}
+
+.text-reader button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* Volume control styles
+ *
+ * - Styles for the volume sliders in both TextReader and TrackPlayer.
+ */
+.volume-control {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.volume-control label {
+  min-width: 100px;
+  font-size: 14px;
+}
+
+.volume-control input[type="range"] {
+  flex: 1;
+  height: 8px;
+  -webkit-appearance: none;
+  background: #ddd;
+  border-radius: 4px;
+  outline: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #8E1A99;
+  cursor: pointer;
+}
+
+.volume-control span {
+  min-width: 40px;
+  text-align: right;
+  font-size: 14px;
+}
+
+/* Track Player component styles
+ *
+ * - Enhanced styles for the music player with volume controls.
+ */
+.track-player {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.track-player audio {
+  width: 100%;
+  margin: 10px 0;
+}

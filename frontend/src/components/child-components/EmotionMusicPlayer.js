@@ -13,6 +13,7 @@ import EmotionDisplay from "../grandchild-components/EmotionDisplay";
 import TrackPlayer from "../grandchild-components/TrackPlayer"; 
 import ErrorMessage from "../grandchild-components/ErrorMessage"; 
 import HistoryList from "../grandchild-components/HistoryList"; 
+import TextReader from "../grandchild-components/TextReader"; // Import the new TextReader component
 import { classifyEmotionAPI } from "../../utilities/api"; 
 
 import banner from "../../assets/Lirica_Banner.svg";
@@ -111,6 +112,9 @@ const EmotionMusicPlayer = () => {
         ) : (
           <TextInput text={text} setText={setText} /> // Component to handle text input
         )}
+
+        {/* Text Reader component - allows users to listen to the input text */}
+        {text && <TextReader text={text} />}
 
         {/* Instrumental toggle: Allows users to specify if they prefer instrumental tracks */}
         <ToggleSwitch instrumental={instrumental} setInstrumental={setInstrumental} />
