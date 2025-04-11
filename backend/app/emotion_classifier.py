@@ -4,10 +4,16 @@
 # This file contains logic for emotion classification using OpenAI's GPT API.
 # It works with `music_recommendation.py` by providing the detected emotion, which is used to recommend music.
 
-from app.utils import get_openai_client  # Helper function to initialize OpenAI client
+# from app.utils import get_openai_client  # Helper function to initialize OpenAI client
+from pydantic import BaseModel
+from openai import OpenAI
 
 # Initialize OpenAI client
-openai_client = get_openai_client()
+# openai_client = get_openai_client()
+openai_client = OpenAI()
+
+class feeling(BaseModel):
+    emotion: str
 
 def classify_emotion(text: str) -> str:
     """
@@ -22,17 +28,28 @@ def classify_emotion(text: str) -> str:
     # Debugging OpenAI API call
     print(f"DEBUG: Sending text to OpenAI API: {text}")
     
-    response = openai_client.chat.completions.create(
+    response = openai_client.beta.chat.completions.parse(
         model="gpt-4o",
         messages=[
             {"role": "system", "content": "Analyze emotions from text."},
             {"role": "user", "content": f"Classify the emotion of this text: {text}"},
         ],
+        response_format=feeling,
     )
     # Debugging OpenAI response
     print(f"DEBUG: OpenAI Response: {response}")
+
+    emotion_sentence = response.choices[0].message
+    emotion = "angry"       #default value
+    if emotion_sentence.parsed:
+        emotion = emotion_sentence.parsed.emotion
     
+    else:
+        print("DEBUG: faced an issue with parsing the emotion from message")
+        
     # Extract the emotion from the response
-    emotion_sentence = response.choices[0].message.content.strip()
-    emotion = emotion_sentence.split()[-1].strip(".")
+    # print("emotion sentence")
+    # emotion = emotion_sentence.split()[-1].strip(".")
     return emotion
+
+classify_emotion("i am sad")
