@@ -4,13 +4,13 @@
 # This file contains logic for emotion classification using OpenAI's GPT API.
 # It works with `music_recommendation.py` by providing the detected emotion, which is used to recommend music.
 
-# from app.utils import get_openai_client  # Helper function to initialize OpenAI client
+from app.utils import get_openai_client  # Helper function to initialize OpenAI client
 from pydantic import BaseModel
 from openai import OpenAI
 
 # Initialize OpenAI client
-# openai_client = get_openai_client()
-openai_client = OpenAI()
+openai_client = get_openai_client()
+# openai_client = OpenAI()
 
 class feeling(BaseModel):
     emotion: str
@@ -51,5 +51,3 @@ def classify_emotion(text: str) -> str:
     # print("emotion sentence")
     # emotion = emotion_sentence.split()[-1].strip(".")
     return emotion
-
-classify_emotion("i am sad")

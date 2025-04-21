@@ -26,14 +26,31 @@ const EmotionMusicPlayer = () => {
   const [track, setTrack] = useState(null); // to store track details (e.g., song name and artist)
   const [error, setError] = useState(""); // to store error messages for display
   const [instrumental, setInstrumental] = useState(false); // to determine if instrumental tracks are preferred
-  const [history, setHistory] = useState(
-    JSON.parse(localStorage.getItem("history")) || [] // Initialize the analysis history from localStorage
-  );
-
+  const [history, setHistory] = useState([]);
   // Save history to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem("history", JSON.stringify(history)); // Persist the analysis history in the browser's localStorage
-  }, [history]);
+    const fetchHistory = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/history');
+        if (!response.ok) {
+          throw new Error('Failed to fetch history');
+        }
+        const data = await response.json();
+        // Transform the data to match your frontend structure if needed
+        const formattedHistory = data.map(item => ({
+          text: item.text,
+          emotion: item.emotion,
+          track: item.track,
+          timestamp: new Date(item._id.getTimestamp()).toLocaleString()
+        }));
+        setHistory(formattedHistory);
+      } catch (error) {
+        console.error('Error fetching history:', error);
+      }
+    };
+
+    fetchHistory();
+  }, []);
 
   // API call for emotion classification
   const classifyEmotion = async () => {
@@ -54,14 +71,18 @@ const EmotionMusicPlayer = () => {
       setEmotion(data.emotion); // Update the emotion state with the API response
       setTrack(data.track); // Update the track details state with the API response
 
-      // Add the result to the analysis history
-      const newEntry = {
-        text, // User-provided text
-        emotion: data.emotion, // Detected emotion
-        track: data.track, // Track recommendation details
-        timestamp: new Date().toLocaleString(), // Timestamp of the analysis
-      };
-      setHistory([newEntry, ...history]); // Add the new entry to the beginning of the history array
+      // After successful analysis, refresh the history
+      const response = await fetch('http://127.0.0.1:8000/history');
+      if (response.ok) {
+        const newHistory = await response.json();
+        const formattedHistory = newHistory.map(item => ({
+          text: item.text,
+          emotion: item.emotion,
+          track: item.track,
+          timestamp: new Date(item._id.getTimestamp()).toLocaleString()
+        }));
+        setHistory(formattedHistory);
+      }
     } catch (error) {
       setError("Error in classification. Please try again."); // if the API call fails
     } finally {
