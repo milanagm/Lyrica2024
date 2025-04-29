@@ -41,7 +41,7 @@ const EmotionMusicPlayer = () => {
           text: item.text,
           emotion: item.emotion,
           track: item.track,
-          timestamp: new Date(item._id.getTimestamp()).toLocaleString()
+          instrumental: item.instrumental,  
         }));
         setHistory(formattedHistory);
       } catch (error) {
@@ -79,11 +79,12 @@ const EmotionMusicPlayer = () => {
           text: item.text,
           emotion: item.emotion,
           track: item.track,
-          timestamp: new Date(item._id.getTimestamp()).toLocaleString()
+          instrumental: item.instrumental,
         }));
         setHistory(formattedHistory);
       }
     } catch (error) {
+      console.log(error);
       setError("Error in classification. Please try again."); // if the API call fails
     } finally {
       setLoading(false); // End loading state
